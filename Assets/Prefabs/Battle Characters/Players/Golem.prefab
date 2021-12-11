@@ -94,11 +94,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d39f7f8646d4514f988557b31992caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
+  isPlayer: 1
   attacksAvailable: []
   characterName: Golem
-  currentHp: 0
-  maxHP: 0
+  currentHP: 0
+  maxHP: 200
   currentMana: 0
   maxMana: 0
   dexterity: 0

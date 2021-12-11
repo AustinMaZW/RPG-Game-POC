@@ -95,9 +95,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  attacksAvailable: []
+  attacksAvailable:
+  - Blue Fireball
+  - Slash
+  - Water Blade
   characterName: Minotaur
-  currentHp: 1000
+  currentHP: 1000
   maxHP: 1000
   currentMana: 200
   maxMana: 200

@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Background
   - 
   - 
   - 
@@ -41,10 +41,13 @@ TagManager:
   - name: background
     uniqueID: 277206307
     locked: 0
+  - name: Walking Character
+    uniqueID: 3481808183
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: Battle Characters
     uniqueID: 3426392165
     locked: 0
   - name: Battle Bg
@@ -52,4 +55,7 @@ TagManager:
     locked: 0
   - name: Battle Characters
     uniqueID: 3067988997
+    locked: 0
+  - name: Battle Effect
+    uniqueID: 2734453141
     locked: 0

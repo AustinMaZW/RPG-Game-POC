@@ -23,7 +23,15 @@ public class AreaExit : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             Player.instance.transitionName = transitionName;
-            SceneManager.LoadScene(sceneToLoad);
+            MenuManager.instance.FadeImage();
+            StartCoroutine(LoadSceneCoroutine());
         }
+    }
+
+    IEnumerator LoadSceneCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene(sceneToLoad);
     }
 }

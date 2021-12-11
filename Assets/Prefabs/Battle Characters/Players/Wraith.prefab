@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 910480735585957234}
   - component: {fileID: 910480735585957235}
+  - component: {fileID: 6744587585858314408}
   m_Layer: 0
   m_Name: Wraith
   m_TagString: Untagged
@@ -81,3 +82,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6744587585858314408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910480735585957245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d39f7f8646d4514f988557b31992caf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 1
+  attacksAvailable: []
+  characterName: Wraith
+  currentHP: 0
+  maxHP: 50
+  currentMana: 0
+  maxMana: 0
+  dexterity: 0
+  defence: 0
+  wpnPower: 0
+  armorDefence: 0
+  isDead: 0
