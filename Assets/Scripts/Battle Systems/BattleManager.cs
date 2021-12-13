@@ -30,6 +30,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] playersNameText;
     [SerializeField] Slider[] playerHealthSlider, playerManaSlider;
 
+    [SerializeField] GameObject enemyTargetPanel;
+    [SerializeField] BattleTargetButtons[] targetButtons;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -239,9 +242,9 @@ public class BattleManager : MonoBehaviour
     {
         List<int> players = new List<int>();
 
-        for(int i = 0; i< activeCharacters.Count; i++)
+        for (int i = 0; i < activeCharacters.Count; i++)
         {
-            if(activeCharacters[i].IsPlayer() && activeCharacters[i].currentHP > 0)
+            if (activeCharacters[i].IsPlayer() && activeCharacters[i].currentHP > 0)
             {
                 players.Add(i);
             }
@@ -251,27 +254,28 @@ public class BattleManager : MonoBehaviour
 
         int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length);
         int movePower = 0;
-        for(int i = 0; i < battleMovesList.Length; i++)
+        for (int i = 0; i < battleMovesList.Length; i++)
         {
-            if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack])
+            if (battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack])
             {
-                Instantiate(
-                    battleMovesList[i].theEffectToUse,
-                    activeCharacters[selectedPlayerToAttack].transform.position,
-                    activeCharacters[selectedPlayerToAttack].transform.rotation
-                    );
-                movePower = battleMovesList[i].movePower;
+
+                movePower = GettingMovePowerAndEffectInstantiation(selectedPlayerToAttack, i);
             }
         }
 
-        //instantiate the attack effect on the character that is attacking
-        Instantiate(characterAttackEffect,
-            activeCharacters[currentTurn].transform.position,
-            activeCharacters[currentTurn].transform.rotation);
+        InstantiateEffectOnAttackingCharacter();
 
         DealDamageToCharacters(selectedPlayerToAttack, movePower);
 
         UpdatePlayerStats();
+    }
+
+    private void InstantiateEffectOnAttackingCharacter()
+    {
+        //instantiate the attack effect on the character that is attacking
+        Instantiate(characterAttackEffect,
+            activeCharacters[currentTurn].transform.position,
+            activeCharacters[currentTurn].transform.rotation);
     }
 
     private void DealDamageToCharacters(int selectedCharacterToAttack, int movePower)
@@ -283,9 +287,6 @@ public class BattleManager : MonoBehaviour
         int damageToDeal = (int)damageAmount;
 
         damageToDeal = CalculateCritical(damageToDeal);
-
-        Debug.Log(activeCharacters[currentTurn].characterName + " just dealt " + damageToDeal + "(" + damageAmount + ") to"
-            + activeCharacters[selectedCharacterToAttack]);
 
         activeCharacters[selectedCharacterToAttack].TakeHPDamage(damageToDeal);
 
@@ -337,5 +338,67 @@ public class BattleManager : MonoBehaviour
 
             }
         }
+    }
+
+    public void PlayerAttack(string moveName, int selectEnemyTarget)
+    {
+        int movePower = 0;
+
+        for(int i = 0; i < battleMovesList.Length; i++)
+        {
+            if(battleMovesList[i].moveName == moveName)
+            {
+                movePower = GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i);
+            }
+        }
+
+        InstantiateEffectOnAttackingCharacter();
+
+        DealDamageToCharacters(selectEnemyTarget, movePower);
+
+        NextTurn();
+
+        enemyTargetPanel.SetActive(false);
+    }
+
+    public void OpenTargetMenu(string moveName)
+    {
+        enemyTargetPanel.SetActive(true);
+
+        List<int> enemies = new List<int>();
+        for(int i = 0; i< activeCharacters.Count; i++)
+        {
+            if (!activeCharacters[i].IsPlayer())
+            {
+                enemies.Add(i);
+            }
+        }
+
+        Debug.Log(enemies.Count);
+
+        for(int i = 0; i< targetButtons.Length; i++)
+        {
+            if(enemies.Count > i)
+            {
+                targetButtons[i].gameObject.SetActive(true);
+                targetButtons[i].moveName = moveName;
+                targetButtons[i].activeBattleTarget = enemies[i];
+                targetButtons[i].targetName.text = activeCharacters[enemies[i]].characterName;
+                Debug.Log(activeCharacters[enemies[i]].characterName);
+            }
+        }
+    }
+
+    private int GettingMovePowerAndEffectInstantiation(int selectCharacterTarget, int i)
+    {
+        int movePower;
+        Instantiate(
+               battleMovesList[i].theEffectToUse,
+               activeCharacters[selectCharacterTarget].transform.position,
+               activeCharacters[selectCharacterTarget].transform.rotation
+               );
+
+        movePower = battleMovesList[i].movePower;
+        return movePower;
     }
 }
