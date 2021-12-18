@@ -33,6 +33,11 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject enemyTargetPanel;
     [SerializeField] BattleTargetButtons[] targetButtons;
 
+    public GameObject magicPanel;
+    [SerializeField] BattleMagicButtons[] magicButtons;
+
+    public BattleNotifications battleNotice;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -191,9 +196,12 @@ public class BattleManager : MonoBehaviour
                 activeCharacters[i].currentHP = 0;
             }
 
-            if (activeCharacters[i].currentHP == 0)
+            if (activeCharacters[i].currentHP == 0) //dead character
             {
-                //kill character
+                if (!activeCharacters[i].isDead)
+                {
+                    activeCharacters[i].KillCharacter();
+                }
             }
             else
             {
@@ -217,10 +225,10 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            while(activeCharacters[currentTurn].currentHP == 0)
+            while (activeCharacters[currentTurn].currentHP == 0)
             {
                 currentTurn++;
-                if(currentTurn >= activeCharacters.Count)
+                if (currentTurn >= activeCharacters.Count)
                 {
                     currentTurn = 0;
                 }
@@ -298,9 +306,9 @@ public class BattleManager : MonoBehaviour
         characterDamageText.SetDamage(damageToDeal);
     }
 
-    private int CalculateCritical (int damageToDeal)
+    private int CalculateCritical(int damageToDeal)
     {
-        if(Random.value <= 0.1f)
+        if (Random.value <= 0.1f)
         {
             Debug.Log($"CRIT! CRIT! CRIT! Instead of {damageToDeal}, {damageToDeal * 2} was dealt");
             return damageToDeal * 2;
@@ -311,9 +319,9 @@ public class BattleManager : MonoBehaviour
 
     public void UpdatePlayerStats()
     {
-        for(int i =0; i< playersNameText.Length; i++)
+        for (int i = 0; i < playersNameText.Length; i++)
         {
-            if(activeCharacters.Count > i)
+            if (activeCharacters.Count > i)
             {
                 if (activeCharacters[i].IsPlayer())
                 {
@@ -344,9 +352,9 @@ public class BattleManager : MonoBehaviour
     {
         int movePower = 0;
 
-        for(int i = 0; i < battleMovesList.Length; i++)
+        for (int i = 0; i < battleMovesList.Length; i++)
         {
-            if(battleMovesList[i].moveName == moveName)
+            if (battleMovesList[i].moveName == moveName)
             {
                 movePower = GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i);
             }
@@ -366,7 +374,7 @@ public class BattleManager : MonoBehaviour
         enemyTargetPanel.SetActive(true);
 
         List<int> enemies = new List<int>();
-        for(int i = 0; i< activeCharacters.Count; i++)
+        for (int i = 0; i < activeCharacters.Count; i++)
         {
             if (!activeCharacters[i].IsPlayer())
             {
@@ -376,15 +384,18 @@ public class BattleManager : MonoBehaviour
 
         Debug.Log(enemies.Count);
 
-        for(int i = 0; i< targetButtons.Length; i++)
+        for (int i = 0; i < targetButtons.Length; i++)
         {
-            if(enemies.Count > i)
+            if (enemies.Count > i && !activeCharacters[enemies[i]].isDead)
             {
                 targetButtons[i].gameObject.SetActive(true);
                 targetButtons[i].moveName = moveName;
                 targetButtons[i].activeBattleTarget = enemies[i];
                 targetButtons[i].targetName.text = activeCharacters[enemies[i]].characterName;
-                Debug.Log(activeCharacters[enemies[i]].characterName);
+            }
+            else
+            {
+                targetButtons[i].gameObject.SetActive(false);
             }
         }
     }
@@ -400,5 +411,39 @@ public class BattleManager : MonoBehaviour
 
         movePower = battleMovesList[i].movePower;
         return movePower;
+    }
+    public void OpenMagicPanel()
+    {
+        magicPanel.SetActive(true);
+
+        for(int i = 0; i<magicButtons.Length; i++)
+        {
+            if(activeCharacters[currentTurn].AttackMovesAvailable().Length > i)
+            {
+                magicButtons[i].gameObject.SetActive(true);
+                magicButtons[i].spellName = GetCurrentActiveCharacter().AttackMovesAvailable()[i];
+                magicButtons[i].spellNameText.text = magicButtons[i].spellName;
+
+                for(int j=0; j< battleMovesList.Length; j++)
+                {
+                    if(battleMovesList[j].moveName == magicButtons[i].spellName)
+                    {
+                        magicButtons[i].spellCost = battleMovesList[j].manaCost;
+                        magicButtons[i].spellCostText.text = magicButtons[i].spellCost.ToString();
+
+                    }
+                }
+            }
+            else
+            {
+                magicButtons[i].gameObject.SetActive(false);
+            }
+
+        }
+    }
+
+    public BattleCharacters GetCurrentActiveCharacter()
+    {
+        return activeCharacters[currentTurn];
     }
 }

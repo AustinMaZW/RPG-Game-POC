@@ -95,14 +95,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 1
-  attacksAvailable: []
+  attacksAvailable:
+  - Blue Fireball
+  - Water Blade
   characterName: Wraith
   currentHP: 0
   maxHP: 50
   currentMana: 0
   maxMana: 0
-  dexterity: 0
-  defence: 0
+  dexterity: 100
+  defence: 10
   wpnPower: 0
   armorDefence: 0
   isDead: 0
+  deathParticles: {fileID: 2740219943067552209, guid: 2adab11bd51832f4cbf8da9de4d2d6b9,
+    type: 3}

@@ -100,8 +100,8 @@ MonoBehaviour:
   - Slash
   - Water Blade
   characterName: Minotaur
-  currentHP: 1000
-  maxHP: 1000
+  currentHP: 200
+  maxHP: 200
   currentMana: 200
   maxMana: 200
   dexterity: 5
@@ -109,3 +109,5 @@ MonoBehaviour:
   wpnPower: 50
   armorDefence: 20
   isDead: 0
+  deathParticles: {fileID: 2740219943067552209, guid: 2adab11bd51832f4cbf8da9de4d2d6b9,
+    type: 3}

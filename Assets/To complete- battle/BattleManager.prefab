@@ -1437,6 +1437,20 @@ MonoBehaviour:
   enemiesPositions: []
   playersPrefabs: []
   enemiesPrefabs: []
+  currentTurn: 0
+  waitingForTurn: 0
+  UIButtonHolder: {fileID: 0}
+  battleMovesList: []
+  characterAttackEffect: {fileID: 0}
+  damageText: {fileID: 0}
+  playersBattleStats: []
+  playersNameText: []
+  playerHealthSlider: []
+  playerManaSlider: []
+  enemyTargetPanel: {fileID: 0}
+  targetButtons: []
+  magicPanel: {fileID: 0}
+  magicButtons: []
 --- !u!1 &1252278304610201963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,6 +2914,20 @@ MonoBehaviour:
   enemiesPositions: []
   playersPrefabs: []
   enemiesPrefabs: []
+  currentTurn: 0
+  waitingForTurn: 0
+  UIButtonHolder: {fileID: 0}
+  battleMovesList: []
+  characterAttackEffect: {fileID: 0}
+  damageText: {fileID: 0}
+  playersBattleStats: []
+  playersNameText: []
+  playerHealthSlider: []
+  playerManaSlider: []
+  enemyTargetPanel: {fileID: 0}
+  targetButtons: []
+  magicPanel: {fileID: 0}
+  magicButtons: []
 --- !u!1 &1252278305183102604
 GameObject:
   m_ObjectHideFlags: 0
